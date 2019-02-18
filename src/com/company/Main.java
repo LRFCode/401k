@@ -1,7 +1,6 @@
 package com.company;
 
 import java.math.BigDecimal;
-import java.sql.SQLOutput;
 import java.util.Scanner;
 
 public class Main
@@ -31,23 +30,25 @@ public class Main
         System.out.println("E: " + employeeId);
         System.out.println("N: " + amount);
 
-        Employee employee = new Employee(name, employeeId, new BigDecimal(amount));
+        Employee employee = new Employee(name, employeeId);
 
         System.out.println();
         System.out.println("Please pick from the following funds");
 
-        FundSelections fundSelections = new FundSelections();
-        fundSelections.displayFunds();
+        FundSelections fundSelections = new FundSelections(new BigDecimal(amount));
 
-        System.out.print("Enter fund number: ");
-        int fundNumber = input.nextInt();
+        do
+        {
+            fundSelections.displayFunds();
 
-        System.out.print("Enter a percentage: ");
-        int percentage = input.nextInt();
+            System.out.print("Enter fund number: ");
+            int fundNumber = input.nextInt();
 
-        fundSelections.setPercentage(fundNumber, percentage);
-        fundSelections.displayFunds();
+            System.out.print("Enter a percentage: ");
+            int percentage = input.nextInt();
 
-
+            fundSelections.setPercentage(fundNumber, percentage);
+        }
+        while (!fundSelections.fullyAllocated());
     }
 }
